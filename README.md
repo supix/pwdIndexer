@@ -70,11 +70,19 @@ During indexing, two additional support data structures are filled. The `rootNod
 
 ## The `rootNodes` map
 
-The `rootNodes` map holds references to all the first level nodes, keyed by the related character. These references allow to find the entry point in the tree, according to the first character of the token to be indexed. For example, the token `toppy` starts with the `top` prefix, which is already indexed. In this case, the nodes are not duplicated in the tree and `toppy` is indexed sharing the first three nodes of the `top` token, and appending the remaining nodes to it (i.e. the `p` and the `y`). This data structure is used only during indexing phase. It is not used during the search phase.
+The `rootNodes` map holds references to all the first level nodes, keyed by the related character.
+
+![The rootNodes map](/docs/rootNodes.png?raw=true "The rootNodes map")
+
+These references allow to find the entry point in the tree, according to the first character of the token to be indexed. For example, the token `toppy` starts with the `top` prefix, which is already indexed. In this case, the nodes are not duplicated in the tree and `toppy` is indexed sharing the first three nodes of the `top` token, and appending the remaining nodes to it (i.e. the `p` and the `y`). This data structure is used only during indexing phase. It is not used during the search phase.
 
 ## The `allNodes` map
 
-The `allNodes` map holds references to all the nodes in the tree. Each reference is keyed by a character and contains the list of nodes related to that character in the tree. When a search is requested, the `allNodes` map is read, keyed by the first character of the search pattern. The list of all the tree nodes holding that character is retrieved and the search is started for each such node. For example, in case the pattern is `py`, the `allNodes` map is checked keyed by the `p` character. Two results are found. The first `p` does not have an `y` as a child and then the search stops here. The second `p` happens to have a `y` as child. The search patterns is now complete and then a match is found. Now, the matching node is visited searching for all the colored nodes contained in the subtree rooted in this node. For each colored node found, a search result is returned.
+The `allNodes` map holds references to all the nodes in the tree. Each reference is keyed by a character and contains the list of nodes related to that character in the tree.
+
+![The allNodes map](/docs/allNodes.png?raw=true "The allNodes map")
+
+When a search is requested, the `allNodes` map is read, keyed by the first character of the search pattern. The list of all the tree nodes holding that character is retrieved and the search is started for each such node. For example, in case the pattern is `py`, the `allNodes` map is checked keyed by the `p` character. Two results are found. The first `p` does not have an `y` as a child and then the search stops here. The second `p` happens to have a `y` as child. The search patterns is now complete and then a match is found. Now, the matching node is visited searching for all the colored nodes contained in the subtree rooted in this node. For each colored node found, a search result is returned.
 
 # Notes
 
