@@ -3,62 +3,66 @@ import java.util.HashMap;
 
 public class Indexer {
 	/**
-	 * Questa mappa ha come chiavi tutti i caratteri contenuti nelle parole indicizzate.
-	 * Per ogni chiave, ha una lista di puntatori ai nodi dell'albero contenenti quel
-	 * carattere. Una ricerca con una keyword che inizia col carattere x userà questa
-	 * mappa per individuare tutti i nodi da cui ha inizio la ricerca in cerca dei
-	 * successivi caratteri (quelli dopo x).
+	 * The keys in this map are all the characters contained in the indexed file. For
+	 * each key, the corresponding value is a list of references to the tree nodes
+	 * associated to that character. Searching a keyword starting with the 'x' character
+	 * uses this map to find all the nodes the search has to start from (and continue
+	 * with the following characters).
 	 */
 	private HashMap<Character, ArrayList<IdxNode>> allNodes = new HashMap<Character, ArrayList<IdxNode>>();
 	
 	/**
-	 * Questa mappa contiene tutti i nodi al primo livello dell'albero. La mappa
-	 * è usata esclusivamente in fase di indicizzazione. Se devo indicizzare una parola
-	 * che inizia con la lettera x, la mappa mi dice se c'è già un'altra parola che
-	 * inizia con la lettera x oppure devo creare un nuovo nodo al livello 1.
+	 * This map contains all the tree nodes at the first-level. Tha map is used only
+	 * in the indexing phase (not in the search phase). When a token starting with the
+	 * 'x' character is indexed, the map is used to possibly find another already
+	 * indexed token starting with 'x'. Otherwise, a new first-level node associated
+	 * with the 'x' character has to be created.
 	 */
 	private HashMap<Character, IdxNode> rootNodes = new HashMap<Character, IdxNode>();
 	
 	/**
-	 * Indicizza un token
-	 * @param token Il token da indicizzare
+	 * Index a token.
+	 * <p>
+	 * Note: the token indexing is a fully recursive function. Each character in the token
+	 * corresponds to a recursion step.
+	 * </p>
+	 * @param token The token to be indexed
 	 */
 	public void index(String token) {
 		processTokenChar(token, 0, null);
 	}
 
 	/**
-	 * Metodo ricorsivo che, carattere per carattere, indicizza l'intero token
-	 * @param token Il token da indicizzare
-	 * @param i Il carattere correntemente in fase di indicizzazione
-	 * @param node Il nodo dell'albero relativo al carattere appena indicizzato
+	 * Recursive method which, char by char, fully indexes the token.
+	 * @param token The token to be indexed
+	 * @param i The index of the currently indexed char in the token
+	 * @param node The tree node corresponding to the last (already) indexed char. It is null for the first indexed character.
 	 */
 	private void processTokenChar(String token, int i, IdxNode node) {
-		// se la lettera da analizzare è oltre la lunghezza del token, esco
+		// if the character-index to analyze falls beyond the last character, exit
 		if (i >= token.length())
 			return;
 		
-		// prendo il carattere correntemente analizzato
+		// take the currently analyzed character
 		char c = token.charAt(i);
 		
 		IdxNode child;
 		
 		if (node == null || !node.getChildren().containsKey(c)) {
 			if (node == null && rootNodes.containsKey(c))
-				// ho trovato un nodo al primo livello, lo assegno a child
+				// found a first level node, assign it to child
 				child = rootNodes.get(c);
 			else {
-				// non ho trovato un nodo al primo livello, oppure come
-				// successivo di quello correntemente analizzato (in caso
-				// di chiamata ricorsiva)
+				// first level node not found, nor a child of the currently analyzed node
+				// (in case of recursive call)
 				child = new IdxNode(c, node);
-				// se sono al primo livello (node == null) il nodo create
-				// è anche un nodo al primo livello, e lo aggiungo a
+				// if we are at the first level (node == null) the created node
+				// is a first level node, too. Add it to root nodes.
 				// rootNodes
 				if (node == null)
 					rootNodes.put(c, child);
 			
-				// il nodo creato va aggiunto alla mappa allNodes
+				// the created node is added to allNodes map
 				ArrayList<IdxNode> arrayList;
 				if (!allNodes.containsKey(c)) {
 					arrayList = new ArrayList<IdxNode>();
@@ -71,44 +75,43 @@ public class Indexer {
 			child = node.getChildren().get(c);
 		}
 			
-		// se sono alla ultima lettera, marco il nodo come nodo tail
+		// if this is the last letter of the token, set the tail flag to true
 		if (i == token.length() - 1)
 			child.setTail();
 		
-		// processo il successivo carattere
+		// process the next character
 		processTokenChar(token, i + 1, child);
 	}
 	
 	/**
-	 * Cerca tutti i token nell'indice che matchano una chiave di ricerca 
-	 * @param searchKey La chiave di ricerca
-	 * @return La lista dei token che matchano
+	 * Search the index. All the matching tokens are returned. 
+	 * @param searchKey The search key
+	 * @return The matching tokens
 	 */
 	public ArrayList<String> search(String searchKey) { 
 		ArrayList<String> list = new ArrayList<String>();
 		
-		// se il token è vuoto, esco
+		// in case of an empty token, exit
 		if (searchKey.length() == 0)
 			return list;
 		
-		// prendo il primo carattere
+		// thake the first character
 		char c = searchKey.charAt(0);
 		
-		// se non c'è nell'albero allNodes, la ricerca non dà alcun risultato
+		// if it is not in the allNodes map, the search gives no results. Exit.
 		if (!allNodes.containsKey(c))
 			return list;
 		
-		// per ogni nodo in allNodes, inizio una visita ricorsiva
-		// dell'albero
+		// for each node in allNodes, a recursive visit starts
 		for (IdxNode node: allNodes.get(c)) {
-			// costruisco un nodo fittizio, da passare all'algoritmo ricorsivo
-			// come parent del nodo da visitare
+			// create a temporary node useful just for passing to the recursive function
+			// as a parent node...
 			IdxNode tempParentNode = new IdxNode(c, null);
 			
-			// aggiungo ai suoi figli il nodo da visitare
+			// ...and add to it the node to be visited.
 			tempParentNode.getChildren().put(c, node);
 			
-			// inizio la ricerca ricorsiva
+			// start the recursive search
 			searchTokenChar(searchKey, 0, tempParentNode, list);
 		}
 		
@@ -116,11 +119,11 @@ public class Indexer {
 	}
 
 	/**
-	 * Metodo ricorsivo di ricerca dei token nell'indice
-	 * @param searchKey La chiave di ricerca
-	 * @param i Il carattere correntemente ricercato
-	 * @param node Il nodo correntemente analizzato
-	 * @param list La lista da riempire con i match a mano a mano trovati
+	 * Recursive search method.
+	 * @param searchKey The search key
+	 * @param i The index of the currently searched character in the token
+	 * @param node The currently analyzed node
+	 * @param list The list to be filled with the matching tokens
 	 */
 	private void searchTokenChar(String searchKey, int i, IdxNode node, ArrayList<String> list) {
 		if (i >= searchKey.length())
@@ -143,9 +146,11 @@ public class Indexer {
 	}
 
 	/**
-	 * Dato un nodo, trova tra i suoi discendenti tutti nodi che hanno tail a true
-	 * @param child Il nodo del quale vengono analizzati i discendenti
-	 * @param list La lista da riempire con i match a mano a mano trovati
+	 * Given a node, visits all the descending nodes selecting those having
+	 * tail set to true. For each of them, climbs up the tree until reaching
+	 * the root in order to rebuild the token. 
+	 * @param child The node rooting the subtree to be visited
+	 * @param list The list to be filled with the matching tokens
 	 */
 	private void searchAllTailsInChildren(IdxNode child, ArrayList<String> list) {
 		for(IdxNode node: child.getChildren().values()) {
@@ -156,9 +161,9 @@ public class Indexer {
 	}
 
 	/**
-	 * Ricostruisce la parola a partire da un nodo, risalendo l'albero fino alla radice.
-	 * @param child Il nodo dal quale risalire l'albero verso la radice.
-	 * @return La parola ricostruita.
+	 * Given a node, climbs up until the root and rebuilds the token
+	 * @param child The starting node
+	 * @return The rebuilt token
 	 */
 	private String getTokenFromNode(IdxNode child) {
 		String s = new String();
