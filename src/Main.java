@@ -12,7 +12,8 @@ public class Main {
 		{
 			System.out.println("Indexing...");
 			System.out.println("0 lines so far...");
-	        stream.forEach(line -> {
+			long start = System.nanoTime();
+			stream.forEach(line -> {
 	        	indexer.index(line);
 				
 	        	// stampa un messaggio in fase di lettura del file, ogni milione di righe lette
@@ -20,7 +21,9 @@ public class Main {
 	        	if (i % 1000000 == 0)
 	        		System.out.println(i + " lines so far...");
 	        });
-	        System.out.println(i + " lines so far...");
+			long end = System.nanoTime();
+			long elapsed = (end - start) / 1000000;
+	        System.out.println(i + " lines indexed in " + elapsed + "ms");
 		}
 		
 		System.out.println("");
@@ -62,9 +65,7 @@ public class Main {
 		
 		// stampa i risultati
 		System.out.print(key + " (" + results.size() + " found in " + diff_msec + "ms): ");
-		for(String s: results) {
-			System.out.print(s + ", ");
-		}
+		System.out.print(String.join(", ", results));
 		System.out.println();
 	}
 }
