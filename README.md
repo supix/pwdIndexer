@@ -43,10 +43,10 @@ ahtkwelotn (0 found in 22ms):
 
 Token are indexed building a m-tree. Each node tree corresponds to a single character. A node has as many children as the possible distinct following characters. So each existing token has a specific descending path in the tree, with the first character at the first level of the tree. For example, let's suppose to index the following four words:
 
-` top
-` toppy
-` run
-` towel
+* top
+* toppy
+* run
+* towel
 
 The index tree after the first word appears as follows.
 
