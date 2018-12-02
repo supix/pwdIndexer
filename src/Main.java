@@ -35,6 +35,8 @@ public class Main {
 		printResults("6731", indexer);
 		printResults("stipula", indexer);
 		printResults("t3050", indexer);
+		printResults("ahtkwelotn", indexer);
+		printResults("#$%()", indexer);
 		
 //		indexer.index("toppa");
 //		indexer.index("top");
@@ -51,19 +53,19 @@ public class Main {
 	}
 
 	private static void printResults(String key, Indexer indexer) {
-		// prende il tempo prima della ricerca
+		// takes the time before the search
 		long start = System.nanoTime();
 		
-		// effettua la ricerca nell'indice
+		// searches in the index
 		ArrayList<String> results = indexer.search(key);
 		
-		// prende il tempo alla fine della ricerca
+		// takes the time after the search
 		long end = System.nanoTime();
 		
-		//calcola il tempo trascorso in millisecondi
+		// computes the time in milliseconds
 		long diff_msec = (end - start) / 1000000;
 		
-		// stampa i risultati
+		// print search results and elapsed times
 		System.out.print(key + " (" + results.size() + " found in " + diff_msec + "ms): ");
 		System.out.print(String.join(", ", results));
 		System.out.println();
