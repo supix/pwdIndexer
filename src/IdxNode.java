@@ -1,38 +1,37 @@
 import java.util.HashMap;
 
 /**
- * Questa classe rappresenta il generico nodo dell'albero.
+ * This class models the tree node
  * @author supix
  *
  */
 public class IdxNode {
 	/**
-	 * I figli del nodo. Contendono i caratteri successivi al nodo corrente
+	 * The node's children, i.e. the characters which follow the current node character.
 	 */
 	private HashMap<Character, IdxNode> children = new HashMap<Character, IdxNode>();
 	
 	/**
-	 * E' il carattere contenuto nel nodo
+	 * The character contained in the node
 	 */
 	private Character c;
 	
 	/**
-	 * E' il nodo padre del nodo corrente. Serve a risalire l'albero per
-	 * ricostruire la parola a partire da un nodo contenente la lettera
-	 * finale.
+	 * The parent of the node. It allows to climb up the node to rebuild
+	 * the token starting from the node containing the last character.
 	 */
 	private IdxNode parent;
 	
 	/**
-	 * Flag che indica se il carattere corrente è il carattere finale di
-	 * una parola.
+	 * Flag indicating whether the node corresponds to the last letter
+	 * of a token.
 	 */
 	private boolean tail = false;
 
 	/**
-	 * Costruttore
-	 * @param c Il carattere contenuto nel nodo corrente
-	 * @param parent Il nodo parent del nodo corrente
+	 * Constructor
+	 * @param c The node's character
+	 * @param parent The node's parent
 	 */
 	public IdxNode(Character c, IdxNode parent) {
 		this.c = c;
@@ -59,7 +58,7 @@ public class IdxNode {
 	}
 	
 	/**
-	 * Imposta il flag tail a true
+	 * Set the tail to true
 	 */
 	public void setTail() {
 		this.tail = true;
