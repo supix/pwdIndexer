@@ -6,8 +6,8 @@ public class Indexer {
 	 * The keys in this map are all the characters contained in the indexed file. For
 	 * each key, the corresponding value is a list of references to the tree nodes
 	 * associated to that character. Searching a keyword starting with the 'x' character
-	 * uses this map to find all the nodes the search has to start from (and continue
-	 * with the following characters).
+	 * (e.g. 'xyz') uses this map to find all the nodes the search has to start from
+	 * (and continue with the following characters, i.e. 'yz').
 	 */
 	private HashMap<Character, ArrayList<IdxNode>> allNodes = new HashMap<Character, ArrayList<IdxNode>>();
 	
