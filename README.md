@@ -70,7 +70,7 @@ Let's continue by indexing one more token: the token `topping`. The index tree a
 
 ![Index three after indexing the token topping](/docs/fifth.png?raw=true "Index three after indexing the token topping")
 
-As in the previous case, the first 4 characters of the indexed token (i.e. `topp`) are already in the tree, and do not instantiate any new node. The remeining part of the token (i.e. `ing`) generates a new tree path under the node `p`.
+As in the previous case, the first 4 characters of the indexed token (i.e. `topp`) are already in the tree, and do not instantiate any new node. The remaining part of the token (i.e. `ing`) generates a new tree path under the node `p`.
 
 Starting from the current state of the tree, let's now try to search the pattern `to`. The first letter of the pattern is `t`, and the search starts from the only node in the tree containing this character. The next character is `o`, and it happens to exist within the children of the current node `t`. The pattern is completed and the search found a match in the node `o`, highlighted in yellow in the following picture.
 
