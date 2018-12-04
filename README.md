@@ -3,7 +3,7 @@ A super-fast token searcher using m-trees and hash-maps to index characters
 
 # TL;DR
 
-This program ingests a file containing tokens (e.g. password) and indexes each token in order to enable a super-fast, case-sensitive, match-all search within the tokens. A sample file is provided in the project. It contains 3 million passwords (with duplicates). Despite the large number of indexed tokens, each search lasts about few milliseconds on an i5 Intel processor.
+This program ingests a file containing tokens (e.g. passwords) and indexes each token in order to enable a super-fast, case-sensitive, match-anywhere search within the tokens. A sample file is provided in the project. It contains 3 million passwords (with duplicates). Despite the large number of indexed tokens, each search lasts about few milliseconds on an i5 Intel processor.
 
 The sample file is in the following form.
 
