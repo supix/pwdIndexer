@@ -12,7 +12,7 @@ public class Indexer {
 	private HashMap<Character, ArrayList<IdxNode>> allNodes = new HashMap<Character, ArrayList<IdxNode>>();
 	
 	/**
-	 * This map contains all the tree nodes at the first-level. Tha map is used only
+	 * This map contains all the tree nodes at the first-level. The map is used only
 	 * in the indexing phase (not in the search phase). When a token starting with the
 	 * 'x' character is indexed, the map is used to possibly find another already
 	 * indexed token starting with 'x'. Otherwise, a new first-level node associated
