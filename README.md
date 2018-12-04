@@ -72,11 +72,11 @@ Let's continue by indexing one more token: the token `topping`. The index tree a
 
 As in the previous case, the first 4 characters of the indexed token (i.e. `topp`) are already in the tree, and do not instantiate any new node. The remaining part of the token (i.e. `ing`) generates a new tree path under the node `p`.
 
-Starting from the current state of the tree, let's now try to search the pattern `to`. The first letter of the pattern is `t`, and the search starts from the only node in the tree containing this character. The next character is `o`, and it happens to exist within the children of the current node `t`. The pattern is completed and the search found a match in the node `o`, highlighted in yellow in the following picture.
+Starting from the current state of the tree, let's now try to search the pattern `to`. The first letter of the pattern is `t`, and the search starts from the only node in the tree containing this character. The next character is `o`, and it happens to exist within the children of the current node `t`. The pattern is now completed and the search found a match in the node `o`, highlighted in yellow in the following picture.
 
 ![The mantching node for the pattern 'to'](/docs/sixth.png?raw=true "The mantching node for the pattern 'to'")
 
-Starting from the matching node, a recursive visit of the subtree (enclosed in the dashed line) is started in order to collect all the colored nodes. As we have seen before, for each of them, a match is returned by the search. In this case: top, toppy, and topping.
+Starting from the matching node, a recursive visit of the subtree (enclosed in the dashed line) is started in order to collect all the colored nodes. As we have seen before, for each of them, a match is returned by the search. In this case, the colored nodes are 3 and the related tokens are: top, toppy, and topping.
 
 # Implementation details
 
