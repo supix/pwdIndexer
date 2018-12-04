@@ -76,7 +76,7 @@ Starting from the current state of the tree, let's now try to search the pattern
 
 ![The mantching node for the pattern 'to'](/docs/sixth.png?raw=true "The mantching node for the pattern 'to'")
 
-Starting from the matching node, a recursive visit of the subtree (enclosed in the dashed line) is started in order to collect all the colored nodes. As we have seen before, for each of them, a match is returned by the search. In this case, the colored nodes are 3 and the related tokens are: top, toppy, and topping.
+Starting from the matching node, a recursive visit of the subtree (enclosed in the dashed line) is started in order to collect all the colored nodes. For each of them, a match is returned by the search. In this case, the colored nodes are 3 and the related tokens are: top, toppy, and topping.
 
 # Implementation details
 
