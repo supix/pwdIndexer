@@ -78,6 +78,8 @@ Starting from the current state of the tree, let's now try to search the pattern
 
 Starting from the matching node, a recursive visit of the subtree (enclosed in the dashed line) is started in order to collect all the colored nodes. As we have seen before, for each of them, a match is returned by the search. In this case: top, toppy, and topping.
 
+# Implementation details
+
 During indexing, two additional support data structures are filled. The `rootNodes` map and the `allNodes` map.
 
 ## The `rootNodes` map
