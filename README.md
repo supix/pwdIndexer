@@ -50,25 +50,25 @@ Token are indexed building a m-tree. Each node tree corresponds to a single char
 
 The index tree after the first word appears as follows.
 
-![Index three after indexing the first token](/docs/first.png?raw=true "Index three after indexing the first token")
+![Index tree after indexing the first token](/docs/first.png?raw=true "Index tree after indexing the first token")
 
 After the second word it appears as follows.
 
-![Index three after indexing the second token](/docs/second.png?raw=true "Index three after indexing the second token")
+![Index tree after indexing the second token](/docs/second.png?raw=true "Index tree after indexing the second token")
 
 After the third word it appears as follows.
 
-![Index three after indexing the third token](/docs/third.png?raw=true "Index three after indexing the third token")
+![Index tree after indexing the third token](/docs/third.png?raw=true "Index tree after indexing the third token")
 
 After the fourth word it appears as follows.
 
-![Index three after indexing the fourth token](/docs/fourth.png?raw=true "Index three after indexing the fourth token")
+![Index tree after indexing the fourth token](/docs/fourth.png?raw=true "Index tree after indexing the fourth token")
 
-As one can see, the last character of each token is colored (in the codebase, there is a `last` flag set to true in this case). A colored node corresponds to an existing token. More precisely, climbing up the tree from a colored node until reaching the root node rebuilds the token. For example, climbing up the three from the colored node `y`, gives the sequence `yppot` which, reversed, is the token `toppy`.
+As one can see, the last character of each token is colored (in the codebase, there is a `last` flag set to true in this case). A colored node corresponds to an existing token. More precisely, climbing up the tree from a colored node until reaching the root node rebuilds the token. For example, climbing up the tree from the colored node `y`, gives the sequence `yppot` which, once reversed, is the token `toppy`.
 
 Let's continue by indexing one more token: the token `topping`. The index tree after the indexing appears as follows.
 
-![Index three after indexing the token topping](/docs/fifth.png?raw=true "Index three after indexing the token topping")
+![Index tree after indexing the token topping](/docs/fifth.png?raw=true "Index tree after indexing the token topping")
 
 As in the previous case, the first 4 characters of the indexed token (i.e. `topp`) are already in the tree, and do not instantiate any new node. The remaining part of the token (i.e. `ing`) generates a new tree path under the node `p`.
 
